@@ -1,0 +1,52 @@
+#программа с запросом даты, и ввод задач в разные списки
+import time
+import datetime
+
+
+HELP = """
+help - напечатать справку по программе.
+add - добавить задачу в список (название задачи запрашиваем у пользователя).
+show - напечатать все добавленные задачи.
+exit - выйти из программы"""
+
+
+today_list = []
+tomorrow_list = []
+other = []
+
+run = True
+
+date_format = '%d.%m.%Y'
+current_date = datetime.datetime.today()
+future_date = datetime.datetime.today() + datetime.timedelta(days=1)
+
+today = current_date.strftime(date_format)
+tomorrow = future_date.strftime(date_format)
+
+while run:
+  command = input('Введите команду: ')
+  if command == 'help':
+    print(HELP)
+  elif command == 'show':
+    print(f'Сегодня: {today}-{today_list} Завтра: {tomorrow}-{tomorrow_list} Другой день:  {other}')
+  elif command == 'add':
+    user_data = input('Введите дату заметки в формате дд.мм.гггг: ')
+    if today == user_data:
+      task_today = input('Введите название задачи: ')
+      today_list.append(task_today) #добавляем в список "today"
+    elif tomorrow == user_data:
+      task_tomorrow = input('Введите название задачи: ')
+      tomorrow_list.append(task_tomorrow) #добавляем в список "tomorrow"
+    else:
+      task_other = input('Введите название задачи: ')
+      other.append(user_data)
+      other.append(task_other) #добавляем в список "other"
+    print('Задача добавлена')
+  elif command == 'exit':
+    print('Спасибо за использование!')
+    break
+  else:
+    print('Неизвестная команда')
+    break
+
+print('До свидания!')
