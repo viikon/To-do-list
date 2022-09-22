@@ -1,0 +1,59 @@
+ программа с функцией печати всего списка введенных задач
+import random
+
+
+HELP = """
+help - напечатать справку по программе.
+add - добавить задачу в список (название задачи запрашиваем у пользователя).
+showall - напечатать все добавленные задачи.
+show - напечатать задачу по указанной дате
+random - добавлять случайную задачу на дату Сегодня
+exit - выйти из программы"""
+
+RANDOM_TASK = ['Записаться на курс в нетологию','Написать Гвидо письмо','Покормить кошку','Помыть машину']
+
+tasks = {}
+
+run = True
+
+def add_todo(date, task):
+  if date in tasks:
+    #Дата есть в словаре
+    #Добавляем в список задачу
+    tasks[date].append(task)
+  else:
+    #Даты в словаре нет
+    #Создаем запись с ключом date
+    tasks[date] = []
+    tasks[date].append(task)
+  print('Задача', task,'добавлена на дату', date)
+
+while run:
+  command = input('Введите команду: ')
+  if command == 'help':
+    print(HELP)
+  elif command == 'show':
+    date = input('Введите дату для отображения списка задач: ')
+    if date in tasks:
+      for task in tasks[date]:
+        print(f'- {task}')
+    else:
+      print('Такой даты нет')
+  elif command == 'showall':
+    for key, value in tasks.items():
+      print("{0}: {1}".format(key,value))
+  elif command == 'add':
+    date = input('Введите дату для добавления задачи: ')
+    task = input('Введите задачу: ')
+    add_todo(date, task)
+  elif command == 'random':
+    task = random.choice(RANDOM_TASK)
+    add_todo("Cегодня", task)
+  elif command == 'exit':
+    print('Спасибо за использование!')
+    break
+  else:
+    print('Неизвестная команда')
+    break
+
+print("До свидания!")
